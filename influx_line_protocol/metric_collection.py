@@ -7,4 +7,4 @@ class MetricCollection(object):
         self.metrics.append(metric)
 
     def __str__(self):
-        return "\\n".join(str(m) for m in self.metrics)
+        return "\n".join(str(m) for m in self.metrics)
