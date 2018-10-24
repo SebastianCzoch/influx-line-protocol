@@ -36,5 +36,5 @@ class TestMetricCollection(unittest.TestCase):
         collection.append(metric2)
 
         self.assertEqual(
-            "test,a=1 b=2\\ntest2,c=3 d=4\\ntest,a=1 b=2\\ntest2,c=3 d=4",
+            "test,a=1 b=2\ntest2,c=3 d=4\ntest,a=1 b=2\ntest2,c=3 d=4",
             str(collection))

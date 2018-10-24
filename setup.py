@@ -14,7 +14,7 @@ setuptools.setup(
     description='Implementation of influxdata line protocol format in python',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    version='0.1.0',
+    version='0.1.1',
     url='https://github.com/SebastianCzoch/influx-line-protocol',
     author='Sebastian Czoch',
     author_email='sebastian@czoch.pl',
