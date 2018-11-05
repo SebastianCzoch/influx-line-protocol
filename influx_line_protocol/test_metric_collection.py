@@ -18,7 +18,7 @@ class TestMetricCollection(unittest.TestCase):
         collection = MetricCollection()
         collection.append(metric)
 
-        self.assertEqual("test,a=1 b=2", str(collection))
+        self.assertEqual("test,a=1 b=2i", str(collection))
 
     def test_collection_with_multiple_metrics(self):
         metric = Metric("test")
@@ -36,5 +36,5 @@ class TestMetricCollection(unittest.TestCase):
         collection.append(metric2)
 
         self.assertEqual(
-            "test,a=1 b=2\ntest2,c=3 d=4\ntest,a=1 b=2\ntest2,c=3 d=4",
+            "test,a=1 b=2i\ntest2,c=3 d=4i\ntest,a=1 b=2i\ntest2,c=3 d=4i",
             str(collection))

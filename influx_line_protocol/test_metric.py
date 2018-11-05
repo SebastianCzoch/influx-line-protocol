@@ -13,7 +13,13 @@ class TestMetric(unittest.TestCase):
         metric = Metric("test")
         metric.add_tag("tag1", "string")
 
-        self.assertEqual("test,tag1=\"string\" ", str(metric))
+        self.assertEqual("test,tag1=string ", str(metric))
+
+    def test_metric_with_tag_string_space_without_values_and_timestamp(self):
+        metric = Metric("test")
+        metric.add_tag("tag1", "string with space")
+
+        self.assertEqual("test,tag1=\"string with space\" ", str(metric))
 
     def test_metric_with_tag_value_and_timestamp(self):
         metric = Metric("test")
@@ -22,21 +28,17 @@ class TestMetric(unittest.TestCase):
         metric.with_timestamp(687744000)
 
         self.assertEqual(
-            "test,tag=\"string\" value=\"string\" 687744000", str(metric))
+            "test,tag=string value=\"string\" 687744000", str(metric))
 
     def test_metric_multiple_tags_without_values_and_timestamp(self):
         metric = Metric("test")
         metric.add_tag("tag1", "string1")
         metric.add_tag("tag2", 1)
         metric.add_tag("tag3", 0.25)
-        metric.add_tag("tag4", True)
-        metric.add_tag("tag5", False)
 
-        self.assertIn("tag1=\"string1\"", str(metric))
+        self.assertIn("tag1=string1", str(metric))
         self.assertIn("tag2=1", str(metric))
         self.assertIn("tag3=0.25", str(metric))
-        self.assertIn("tag4=t", str(metric))
-        self.assertIn("tag5=f", str(metric))
         self.assertIn("test,tag", str(metric))
 
     def test_metric_without_tags_and_timestamp(self):
@@ -70,15 +72,11 @@ class TestMetric(unittest.TestCase):
         metric.add_tag("tag1", "string1")
         metric.add_tag("tag2", 1)
         metric.add_tag("tag3", 0.25)
-        metric.add_tag("tag4", True)
-        metric.add_tag("tag5", False)
         metric.with_timestamp(687744000)
 
-        self.assertIn("tag1=\"string1\"", str(metric))
+        self.assertIn("tag1=string1", str(metric))
         self.assertIn("tag2=1", str(metric))
         self.assertIn("tag3=0.25", str(metric))
-        self.assertIn("tag4=t", str(metric))
-        self.assertIn("tag5=f", str(metric))
         self.assertIn("value1=\"string1\"", str(metric))
         self.assertIn("value2=1", str(metric))
         self.assertIn("value3=0.25", str(metric))
