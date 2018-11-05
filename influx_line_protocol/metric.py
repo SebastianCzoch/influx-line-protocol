@@ -10,7 +10,9 @@ class Metric(object):
         self.timestamp = timestamp
 
     def add_tag(self, name, value):
-        self.tags[name] = self.__parse_value(value)
+        if ' ' in str(value):
+            value = '"%s"' % value
+        self.tags[name] = value
 
     def add_value(self, name, value):
         self.values[name] = self.__parse_value(value)
@@ -31,7 +33,7 @@ class Metric(object):
 
     def __parse_value(self, value):
         if type(value).__name__ == 'int':
-            return "%d" % value
+            return "%di" % value
 
         if type(value).__name__ == 'float':
             return "%g" % value
