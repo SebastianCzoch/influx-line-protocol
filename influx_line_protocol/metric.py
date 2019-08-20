@@ -11,7 +11,7 @@ class Metric(object):
 
     def add_tag(self, name, value):
         if ' ' in str(value):
-            value = '"%s"' % value
+            value = value.replace(' ', '\\ ')
         self.tags[name] = value
 
     def add_value(self, name, value):
@@ -19,7 +19,7 @@ class Metric(object):
 
     def __str__(self):
         protocol = self.measurement
-        tags = ["%s=%s" % (key, self.tags[key]) for key in self.tags]
+        tags = ["%s=%s" % (key.replace(' ', '\\ '), self.tags[key]) for key in self.tags]
         if len(tags) > 0:
             protocol = "%s,%s" % (protocol, ",".join(tags))
 
