@@ -17,9 +17,9 @@ class TestMetric(unittest.TestCase):
 
     def test_metric_with_tag_string_space_without_values_and_timestamp(self):
         metric = Metric("test")
-        metric.add_tag("tag1", "string with space")
+        metric.add_tag("tag name", "string with space")
 
-        self.assertEqual("test,tag1=\"string with space\" ", str(metric))
+        self.assertEqual("test,tag\\ name=string\\ with\\ space ", str(metric))
 
     def test_metric_with_tag_value_and_timestamp(self):
         metric = Metric("test")
