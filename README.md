@@ -16,7 +16,7 @@ metric.with_timestamp(1465839830100400200)
 metric.add_tag('location', 'Cracow')
 metric.add_value('temperature', '29')
 
-print metric
+print(metric)
 """
   Will print:
   weather,location=Cracow temperature=29 1465839830100400200
@@ -40,7 +40,7 @@ metric.add_tag('location', 'Nowy Sacz')
 metric.add_value('temperature', '31')
 collection.append(metric)
 
-print collection
+print(collection)
 """
   Will print
   weather,location="Cracow" temperature=29 1465839830100400200
