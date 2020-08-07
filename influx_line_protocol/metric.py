@@ -20,7 +20,6 @@ class Metric(object):
         escaped_measurement = self.measurement.replace(',', '\\,')
         escaped_measurement = escaped_measurement.replace(' ', '\\ ')
         protocol = escaped_measurement
-        print(protocol + "enddd")
 
         # Create tag strings
         tags = []
