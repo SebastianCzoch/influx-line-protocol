@@ -16,7 +16,11 @@ class Metric(object):
         self.values[str(name)] = value
 
     def __str__(self):
-        protocol = self.measurement
+        # Escape measurement manually
+        escaped_measurement = self.measurement.replace(',', '\\,')
+        escaped_measurement = escaped_measurement.replace(' ', '\\ ')
+        protocol = escaped_measurement
+        print(protocol + "enddd")
 
         # Create tag strings
         tags = []
