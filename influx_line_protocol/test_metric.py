@@ -15,6 +15,18 @@ class TestMetric(unittest.TestCase):
 
         self.assertEqual("test,tag1=string ", str(metric))
 
+    def test_metric_escape_measurement_spaces(self):
+        metric = Metric("test test")
+        metric.add_value("a", "b")
+
+        self.assertEqual("test\\ test a=\"b\"", str(metric))
+
+    def test_metric_escape_measurement_commas(self):
+        metric = Metric("test,test")
+        metric.add_value("a", "b")
+
+        self.assertEqual("test\\,test a=\"b\"", str(metric))
+
     def test_metric_with_tag_string_space_without_values_and_timestamp(self):
         metric = Metric("test")
         metric.add_tag("tag name", "string with space")
