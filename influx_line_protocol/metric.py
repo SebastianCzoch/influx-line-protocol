@@ -10,20 +10,37 @@ class Metric(object):
         self.timestamp = timestamp
 
     def add_tag(self, name, value):
-        if ' ' in str(value):
-            value = value.replace(' ', '\\ ')
-        self.tags[name] = value
+        self.tags[str(name)] = str(value)
 
     def add_value(self, name, value):
-        self.values[name] = self.__parse_value(value)
+        self.values[str(name)] = value
 
     def __str__(self):
-        protocol = self.measurement
-        tags = ["%s=%s" % (key.replace(' ', '\\ '), self.tags[key]) for key in self.tags]
+        # Escape measurement manually
+        escaped_measurement = self.measurement.replace(',', '\\,')
+        escaped_measurement = escaped_measurement.replace(' ', '\\ ')
+        protocol = escaped_measurement
+
+        # Create tag strings
+        tags = []
+        for key, value in self.tags.items():
+            escaped_name = self.__escape(key)
+            escaped_value = self.__escape(value)
+
+            tags.append("%s=%s" % (escaped_name, escaped_value))
+
+        # Concatenate tags to current line protocol
         if len(tags) > 0:
             protocol = "%s,%s" % (protocol, ",".join(tags))
 
-        values = ["%s=%s" % (key, self.values[key]) for key in self.values]
+        # Create field strings
+        values = []
+        for key, value in self.values.items():
+            escaped_name = self.__escape(key)
+            escaped_value = self.__parse_value(value)
+            values.append("%s=%s" % (escaped_name, escaped_value))
+
+        # Concatenate fields to current line protocol
         protocol = "%s %s" % (protocol, ",".join(values))
 
         if self.timestamp is not None:
@@ -31,14 +48,27 @@ class Metric(object):
 
         return protocol
 
+    def __escape(self, value, escape_quotes=False):
+        # Escape backslashes first since the other characters are escaped with
+        # backslashes
+        new_value = value.replace('\\', '\\\\')
+        new_value = new_value.replace(' ', '\\ ')
+        new_value = new_value.replace('=', '\\=')
+        new_value = new_value.replace(',', '\\,')
+
+        if escape_quotes:
+            new_value = new_value.replace('"', '\\"')
+
+        return new_value
+
     def __parse_value(self, value):
-        if type(value).__name__ == 'int':
+        if type(value) is int:
             return "%di" % value
 
-        if type(value).__name__ == 'float':
+        if type(value) is float:
             return "%g" % value
 
-        if type(value).__name__ == 'bool':
+        if type(value) is bool:
             return value and "t" or "f"
 
-        return "\"%s\"" % value
+        return "\"%s\"" % self.__escape(value, True)
