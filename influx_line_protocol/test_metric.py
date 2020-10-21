@@ -67,6 +67,18 @@ class TestMetric(unittest.TestCase):
 
         self.assertEqual("test x=\"z\\\\\\\"\"", str(metric))
 
+    def test_metric_escape_field_double_quotes_and_space(self):
+        metric = Metric("test")
+        metric.add_value("x", "foo bar")
+
+        self.assertEqual("test x=\"foo bar\"", str(metric))
+
+    def test_metric_escape_field_double_quotes_with_equal_sign_and_comma(self):
+        metric = Metric("test")
+        metric.add_value("x", "a=b,c=d,e=f")
+
+        self.assertEqual("test x=\"a=b,c=d,e=f\"", str(metric))
+
     def test_metric_with_tag_value_and_timestamp(self):
         metric = Metric("test")
         metric.add_tag("tag", "string")
