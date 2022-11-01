@@ -1,5 +1,4 @@
 class MetricCollection(object):
-
     def __init__(self):
         self.metrics = []
 

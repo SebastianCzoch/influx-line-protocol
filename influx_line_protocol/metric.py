@@ -1,5 +1,4 @@
 class Metric(object):
-
     def __init__(self, measurement):
         self.measurement = measurement
         self.values = {}
@@ -17,8 +16,8 @@ class Metric(object):
 
     def __str__(self):
         # Escape measurement manually
-        escaped_measurement = self.measurement.replace(',', '\\,')
-        escaped_measurement = escaped_measurement.replace(' ', '\\ ')
+        escaped_measurement = self.measurement.replace(",", "\\,")
+        escaped_measurement = escaped_measurement.replace(" ", "\\ ")
         protocol = escaped_measurement
 
         # Create tag strings
@@ -51,16 +50,16 @@ class Metric(object):
     def __escape(self, value):
         # Escape backslashes first since the other characters are escaped with
         # backslashes
-        new_value = value.replace('\\', '\\\\')
+        new_value = value.replace("\\", "\\\\")
 
-        new_value = new_value.replace(' ', '\\ ')
-        new_value = new_value.replace('=', '\\=')
-        new_value = new_value.replace(',', '\\,')
+        new_value = new_value.replace(" ", "\\ ")
+        new_value = new_value.replace("=", "\\=")
+        new_value = new_value.replace(",", "\\,")
 
         return new_value
 
     def __escape_value(self, value):
-        new_value = value.replace('\\', '\\\\')
+        new_value = value.replace("\\", "\\\\")
         new_value = new_value.replace('"', '\\"')
 
         return new_value
@@ -75,4 +74,4 @@ class Metric(object):
         if type(value) is bool:
             return value and "t" or "f"
 
-        return "\"%s\"" % self.__escape_value(value)
+        return '"%s"' % self.__escape_value(value)
