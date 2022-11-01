@@ -4,7 +4,6 @@ from .metric_collection import MetricCollection
 
 
 class TestMetricCollection(unittest.TestCase):
-
     def test_empty_collection(self):
         collection = MetricCollection()
 
@@ -37,4 +36,5 @@ class TestMetricCollection(unittest.TestCase):
 
         self.assertEqual(
             "test,a=1 b=2i\ntest2,c=3 d=4i\ntest,a=1 b=2i\ntest2,c=3 d=4i",
-            str(collection))
+            str(collection),
+        )

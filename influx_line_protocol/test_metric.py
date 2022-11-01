@@ -3,7 +3,6 @@ from .metric import Metric
 
 
 class TestMetric(unittest.TestCase):
-
     def test_metric_without_tags_values_and_timestamp(self):
         metric = Metric("test")
 
@@ -19,13 +18,13 @@ class TestMetric(unittest.TestCase):
         metric = Metric("test test")
         metric.add_value("a", "b")
 
-        self.assertEqual("test\\ test a=\"b\"", str(metric))
+        self.assertEqual('test\\ test a="b"', str(metric))
 
     def test_metric_escape_measurement_commas(self):
         metric = Metric("test,test")
         metric.add_value("a", "b")
 
-        self.assertEqual("test\\,test a=\"b\"", str(metric))
+        self.assertEqual('test\\,test a="b"', str(metric))
 
     def test_metric_with_tag_string_space_without_values_and_timestamp(self):
         metric = Metric("test")
@@ -38,46 +37,46 @@ class TestMetric(unittest.TestCase):
         metric.add_tag("a,b", "c,d")
         metric.add_value("x,y", "z")
 
-        self.assertEqual("test,a\\,b=c\\,d x\\,y=\"z\"", str(metric))
+        self.assertEqual('test,a\\,b=c\\,d x\\,y="z"', str(metric))
 
     def test_metric_escape_tag_and_field_equals(self):
         metric = Metric("test")
         metric.add_tag("a=b", "c=d")
         metric.add_value("x=y", "z")
 
-        self.assertEqual("test,a\\=b=c\\=d x\\=y=\"z\"", str(metric))
+        self.assertEqual('test,a\\=b=c\\=d x\\=y="z"', str(metric))
 
     def test_metric_escape_field_double_quotes(self):
         metric = Metric("test")
-        metric.add_tag("a\"b", "c\"d")
-        metric.add_value("x\"y", "z\"")
+        metric.add_tag('a"b', 'c"d')
+        metric.add_value('x"y', 'z"')
 
-        self.assertEqual("test,a\"b=c\"d x\"y=\"z\\\"\"", str(metric))
+        self.assertEqual('test,a"b=c"d x"y="z\\""', str(metric))
 
     def test_metric_escape_tag_and_field_backslash(self):
         metric = Metric("test")
         metric.add_tag("a\\b", "c\\d")
         metric.add_value("x\\y", "z\\a")
 
-        self.assertEqual("test,a\\\\b=c\\\\d x\\\\y=\"z\\\\a\"", str(metric))
+        self.assertEqual('test,a\\\\b=c\\\\d x\\\\y="z\\\\a"', str(metric))
 
     def test_metric_escape_field_double_quotes_and_backslash(self):
         metric = Metric("test")
-        metric.add_value("x", "z\\\"")
+        metric.add_value("x", 'z\\"')
 
-        self.assertEqual("test x=\"z\\\\\\\"\"", str(metric))
+        self.assertEqual('test x="z\\\\\\""', str(metric))
 
     def test_metric_escape_field_double_quotes_and_space(self):
         metric = Metric("test")
         metric.add_value("x", "foo bar")
 
-        self.assertEqual("test x=\"foo bar\"", str(metric))
+        self.assertEqual('test x="foo bar"', str(metric))
 
     def test_metric_escape_field_double_quotes_with_equal_sign_and_comma(self):
         metric = Metric("test")
         metric.add_value("x", "a=b,c=d,e=f")
 
-        self.assertEqual("test x=\"a=b,c=d,e=f\"", str(metric))
+        self.assertEqual('test x="a=b,c=d,e=f"', str(metric))
 
     def test_metric_with_tag_value_and_timestamp(self):
         metric = Metric("test")
@@ -85,8 +84,7 @@ class TestMetric(unittest.TestCase):
         metric.add_value("value", "string")
         metric.with_timestamp(687744000)
 
-        self.assertEqual(
-            "test,tag=string value=\"string\" 687744000", str(metric))
+        self.assertEqual('test,tag=string value="string" 687744000', str(metric))
 
     def test_metric_multiple_tags_without_values_and_timestamp(self):
         metric = Metric("test")
@@ -103,7 +101,7 @@ class TestMetric(unittest.TestCase):
         metric = Metric("test")
         metric.add_value("foo", "bar")
 
-        self.assertEqual("test foo=\"bar\"", str(metric))
+        self.assertEqual('test foo="bar"', str(metric))
 
     def test_metric_multiple_values_without_tags_and_timestamp(self):
         metric = Metric("test")
@@ -113,7 +111,7 @@ class TestMetric(unittest.TestCase):
         metric.add_value("value4", True)
         metric.add_value("value5", False)
 
-        self.assertIn("value1=\"string1\"", str(metric))
+        self.assertIn('value1="string1"', str(metric))
         self.assertIn("value2=1", str(metric))
         self.assertIn("value3=0.25", str(metric))
         self.assertIn("value4=t", str(metric))
@@ -135,7 +133,7 @@ class TestMetric(unittest.TestCase):
         self.assertIn("tag1=string1", str(metric))
         self.assertIn("tag2=1", str(metric))
         self.assertIn("tag3=0.25", str(metric))
-        self.assertIn("value1=\"string1\"", str(metric))
+        self.assertIn('value1="string1"', str(metric))
         self.assertIn("value2=1", str(metric))
         self.assertIn("value3=0.25", str(metric))
         self.assertIn("value4=t", str(metric))
