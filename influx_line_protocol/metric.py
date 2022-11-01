@@ -48,16 +48,20 @@ class Metric(object):
 
         return protocol
 
-    def __escape(self, value, escape_quotes=False):
+    def __escape(self, value):
         # Escape backslashes first since the other characters are escaped with
         # backslashes
         new_value = value.replace('\\', '\\\\')
+
         new_value = new_value.replace(' ', '\\ ')
         new_value = new_value.replace('=', '\\=')
         new_value = new_value.replace(',', '\\,')
 
-        if escape_quotes:
-            new_value = new_value.replace('"', '\\"')
+        return new_value
+
+    def __escape_value(self, value):
+        new_value = value.replace('\\', '\\\\')
+        new_value = new_value.replace('"', '\\"')
 
         return new_value
 
@@ -71,4 +75,4 @@ class Metric(object):
         if type(value) is bool:
             return value and "t" or "f"
 
-        return "\"%s\"" % self.__escape(value, True)
+        return "\"%s\"" % self.__escape_value(value)
