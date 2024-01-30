@@ -69,7 +69,7 @@ class Metric(object):
             return "%di" % value
 
         if type(value) is float:
-            return "%g" % value
+            return "%f" % value
 
         if type(value) is bool:
             return value and "t" or "f"
